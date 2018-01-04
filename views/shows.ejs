@@ -1,0 +1,36 @@
+<% include partials/header %>
+  <div class="container">
+    <h1 style="text-align: center;">Show and Update for post
+      <%= id %>></h1>
+    <div style="width: 30%; margin: 25px auto;">
+      <div class="container">
+        <p>
+          <%= pantipPost.title%>
+        </p>
+        <p>
+          <%= pantipPost.topic%>
+        </p>
+        <form action="/posts/page/<%= pageId %>/<%= id %>" method="POST">
+          <div class="form-group">
+            <input class="form-control" type="text" name="name" placeholder="name">
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" name="another" placeholder="another name">
+          </div>
+          <div class="form-group">
+            <input type="radio" name="problemFlag" value="problem" checked> Problem
+            <br>
+          </div>
+          <div class="form-group">
+            <input type="radio" name="problemFlag" value="nonProblem"> Not a Problem
+            <br>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+          </div>
+        </form>
+      </div>
+      <a href="/posts/page/<%= pageId %>">Go back</a>
+    </div>
+  </div>
+  <% include partials/footer %>

@@ -1,0 +1,63 @@
+<% include partials/header %>
+  <div class="container">
+    <header class="jumbotron">
+      <div class="container">
+        <h1>Welcome to Thai Text Platform</h1>
+        <p>This aims for data collection, thank you all!</p>
+      </div>
+    </header>
+    <div class="container">
+      <ol start="<%= limitPerPage * (currentPage-1) +1 %>">
+        <% pantipPosts.forEach(function(pantipPost){ %>
+          <li>
+            <a href="/posts/page/<%= (currentPage-1) +1 %>/<%= pantipPost._id %>">
+              <%= pantipPost.title %>
+            </a>
+          </li>
+          <% }); %>
+      </ol>
+    </div>
+    <nav aria-label="...">
+      <ul class="pagination">
+        <% if (currentPage <= 1) { %>
+          <li class="page-item disabled">
+            <span class="page-link">Previous</span>
+          </li>
+          <%} else { %>
+            <li class="page-item">
+              <a class="page-link" href="/posts/page/<%= currentPage-1 %>">Previous</a>
+            </li>
+            <% } %>
+              <% var pageLimit = 20 %>
+                <% var lowerBoundPage = (pageLimit * (Math.floor(currentPage / pageLimit)) > 1 ? pageLimit * (Math.floor(currentPage / pageLimit)) : 1); %>
+                  <% var upperBoundPage = (pageLimit * (Math.floor(currentPage / pageLimit)+1) < totalPage ? pageLimit * (Math.floor(currentPage / pageLimit)+1) : totalPage); %>
+                    <% for(i=lowerBoundPage; i<=upperBoundPage; i++){ %>
+                      <% if (i==currentPage) { %>
+                        <li class="page-item active">
+                          <span class="page-link">
+                            <%= i %>
+                              <span class="sr-only">(current)</span>
+                          </span>
+                        </li>
+                        <% } else { %>
+                          <li class="page-item">
+                            <a class="page-link" href="/posts/page/<%= i %>">
+                              <%= i %>
+                            </a>
+                          </li>
+                          <% } %>
+                            <% } %>
+                              <% if (currentPage >= totalPage) { %>
+                                <li class="page-item disabled">
+                                  <span class="page-link">Next</span>
+                                </li>
+                                <%} else { %>
+                                  <li class="page-item">
+                                    <a class="page-link" href="/posts/page/<%= currentPage+1 %>">Next</a>
+                                  </li>
+                                  <% } %>
+      </ul>
+    </nav>
+  </div>
+
+  <% include partials/footer %>
