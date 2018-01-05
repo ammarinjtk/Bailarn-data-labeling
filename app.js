@@ -1,11 +1,13 @@
 var express = require("express");
 var app = express();
 var bodyParser = require("body-parser");
+var methodOverrie = require("method-override");
 var mongoose = require("mongoose");
 var mongoosePaginate = require('mongoose-paginate');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(methodOverrie("_method"));
 app.set("view engine", "ejs");
 
 mongoose.connect("mongodb://localhost/pantip_data");
@@ -53,7 +55,7 @@ app.get("/posts/page/:pageId/:id", function (req, res) {
   // res.render("shows", { id: id, pageId: pageId, data: data });
 });
 
-app.post("/posts/page/:pageId/:id", function (req, res) {
+app.put("/posts/page/:pageId/:id", function (req, res) {
   var id = req.params.id;
   var pageId = req.params.pageId;
 

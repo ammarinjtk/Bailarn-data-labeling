@@ -9,7 +9,7 @@
         <p>
           <%= pantipPost.topic%>
         </p>
-        <form action="/posts/page/<%= pageId %>/<%= id %>" method="POST">
+        <form action="/posts/page/<%= pageId %>/<%= id %>?_method=PUT" method="POST">
           <div class="form-group">
             <input type="radio" name="problemFlag" value="yes" checked> Problem
             <input type="radio" name="problemFlag" value="no"> Not problem
