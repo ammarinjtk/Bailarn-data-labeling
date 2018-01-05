@@ -7,15 +7,39 @@
       </div>
     </header>
     <div class="container">
-      <ol start="<%= limitPerPage * (currentPage-1) +1 %>">
-        <% pantipPosts.forEach(function(pantipPost){ %>
-          <li>
-            <a href="/posts/page/<%= (currentPage-1) +1 %>/<%= pantipPost._id %>">
-              <%= pantipPost.title %>
-            </a>
-          </li>
-          <% }); %>
-      </ol>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Progress</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% var i = 0 %>
+            <% var startPage = limitPerPage * (currentPage-1) +1 %>
+              <% pantipPosts.forEach(function(pantipPost){ %>
+                <tr>
+                  <td align="center">
+                    <%= startPage + i %>
+                  </td>
+                  <td>
+                    <a href="/posts/page/<%= (currentPage-1) +1 %>/<%= pantipPost._id %>">
+                      <%= pantipPost.title %>
+                    </a>
+                  </td>
+                  <td align="center">
+                    <% if (pantipPost.updated_date) { %>
+                      &#10004;
+                      <% } else { %>
+                        &#10134;
+                        <%} %>
+                  </td>
+                </tr>
+                <% i++; }); %>
+        </tbody>
+      </table>
+
     </div>
     <nav aria-label="...">
       <ul class="pagination">

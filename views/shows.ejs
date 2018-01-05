@@ -1,7 +1,6 @@
 <% include partials/header %>
   <div class="container">
-    <h1 style="text-align: center;">Show and Update for post
-      <%= id %>></h1>
+    <h1 style="text-align: center;">Post information</h1>
     <div style="width: 30%; margin: 25px auto;">
       <div class="container">
         <p>
@@ -12,18 +11,18 @@
         </p>
         <form action="/posts/page/<%= pageId %>/<%= id %>" method="POST">
           <div class="form-group">
-            <input class="form-control" type="text" name="name" placeholder="name">
-          </div>
-          <div class="form-group">
-            <input class="form-control" type="text" name="another" placeholder="another name">
-          </div>
-          <div class="form-group">
-            <input type="radio" name="problemFlag" value="problem" checked> Problem
+            <input type="radio" name="problemFlag" value="yes" checked> Problem
+            <input type="radio" name="problemFlag" value="no"> Not problem
             <br>
           </div>
           <div class="form-group">
-            <input type="radio" name="problemFlag" value="nonProblem"> Not a Problem
-            <br>
+            <p>keyword: </p>
+            <input class="form-control" type="text" name="keywords" placeholder="separated by comma : k1, k2, k3">
+          </div>
+          <div class="form-group">
+            <input type="radio" name="sentiment" value="1"> Positive
+            <input type="radio" name="sentiment" value="0" checked> Neutral
+            <input type="radio" name="sentiment" value="-1"> Negative
           </div>
           <div class="form-group">
             <button class="btn btn-lg btn-primary btn-block">Submit!</button>

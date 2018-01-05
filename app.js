@@ -5,6 +5,7 @@ var mongoose = require("mongoose");
 var mongoosePaginate = require('mongoose-paginate');
 
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public"));
 app.set("view engine", "ejs");
 
 mongoose.connect("mongodb://localhost/pantip_data");
@@ -14,17 +15,14 @@ var pantipSchema = new mongoose.Schema({
   topic: String,
   title: String,
   url: String,
-  keyword: String,
-  sentiment: Number
+  problem: Boolean,
+  keyword: Array,
+  sentiment: Number,
+  updated_date: Date,
 });
 pantipSchema.plugin(mongoosePaginate);
 
 var Model = mongoose.model('Pantip', pantipSchema, 'ratchada_room');
-
-// var pantipPosts = [
-//   { id: 1, title: "สวัสดี นี้คือหัวข้อ1", post: "นี้คือโพสต์1", is_problem: "", keywords: [], sentiment: "", },
-//   { id: 2, title: "สวัสดี นี้คือหัวข้อ2", post: "นี้คือโพสต์2", is_problem: "", keywords: [], sentiment: "", }
-// ];
 
 app.get("/", function (req, res) {
   res.render("index");
@@ -49,8 +47,6 @@ app.get("/posts/page/:pageId/:id", function (req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log(id);
-      console.log(result);
       res.render("shows", { id: id, pageId: pageId, pantipPost: result });
     }
   });
@@ -60,16 +56,23 @@ app.get("/posts/page/:pageId/:id", function (req, res) {
 app.post("/posts/page/:pageId/:id", function (req, res) {
   var id = req.params.id;
   var pageId = req.params.pageId;
-  var name = req.body.name;
-  var another = req.body.another;
-  var problemFlag = req.body.problemFlag;
-  console.log(req.params.id);
-  console.log(problemFlag);
-  console.log(name);
-  console.log(another);
+
+  var updated = {
+    problem: (req.body.problemFlag == 'yes' ? true : false),
+    sentiment: req.body.sentiment,
+    keyword: req.body.keywords.split(","),
+    updated_date: new Date(),
+  }
+  Model.findByIdAndUpdate(id, { $set: updated }, { new: true }, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("id: " + id + " Update successfully");
+      // console.log(result);
+    }
+  });
   res.render("submit", { id: id, pageId: pageId })
-  // //redirect back to list of all posts
-  // res.redirect("/posts/page/" + pageId);
+
 });
 
 
