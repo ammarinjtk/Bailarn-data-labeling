@@ -1,7 +1,8 @@
 <% include partials/header %>
+
   <div class="container">
     <h1 style="text-align: center;">Post information</h1>
-    <div style="width: 30%; margin: 25px auto;">
+    <div style="width: 70%; margin: 25px auto;">
       <div class="container">
         <p>
           <%= pantipPost.title%>
@@ -9,27 +10,160 @@
         <p>
           <%= pantipPost.topic%>
         </p>
-        <form action="/posts/page/<%= pageId %>/<%= id %>?_method=PUT" method="POST">
-          <div class="form-group">
-            <input type="radio" name="problemFlag" value="yes" checked> Problem
-            <input type="radio" name="problemFlag" value="no"> Not problem
-            <br>
-          </div>
-          <div class="form-group">
-            <p>keyword: </p>
-            <input class="form-control" type="text" name="keywords" placeholder="separated by comma : k1, k2, k3">
-          </div>
-          <div class="form-group">
-            <input type="radio" name="sentiment" value="1"> Positive
-            <input type="radio" name="sentiment" value="0" checked> Neutral
-            <input type="radio" name="sentiment" value="-1"> Negative
-          </div>
-          <div class="form-group">
-            <button class="btn btn-lg btn-primary btn-block">Submit!</button>
-          </div>
+
+        <div class="container" style="width: 70%; margin: 30px auto;">
+          <form action="/posts/page/<%= pageId %>/<%= id %>?_method=PUT" method="POST">
+
+            <div class="form-group" style="margin: 10px; padding: 20px; border: 1px solid #4CAF50;">
+              <div style="margin: 5px; padding: 5px;">
+                <label for="is_problem">Problem :</label>
+                <select id="is_problem" name="is_problem"></select>
+              </div>
+              <div style="margin: 5px; padding: 5px;">
+                <label for="type">Type :</label>
+                <select class="form-control" id="type" name="type" onchange="showfieldType(this.options[this.selectedIndex].value)">
+                </select>
+                <div id="other_type_div"></div>
+              </div>
+              <div style="margin: 5px; padding: 5px;">
+                <label for="type_keyword">Type keyword :</label>
+                <div class="type_input_fields_wrap" id="type_keyword">
+                  <button class="type_add_field_button">add keyword</button>
+                  <div>
+                    <input class="form-control" type="text" name="type_keyword[]" placeholder="add keyword">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="company_field_wrap" style="margin: 10px; padding: 20px; border: 1px solid #4CAF50;">
+              <div style="margin: 5px; padding: 5px;">
+                <button class="add_field_wrap_button" style="margin:auto; display:block;">add company</button>
+              </div>
+              <div class="form-group">
+                <div style="margin: 5px; padding: 5px;">
+                  <label for="company">Company name :</label>
+                  <select class="form-control" id="company" name="company_name1" onchange="showfieldCompany(this.options[this.selectedIndex].value, 1)">
+                    <option>Honda</option>
+                    <option>Yamaha</option>
+                    <option>Other</option>
+                  </select>
+                  <div id="other_company_div1"></div>
+                </div>
+                <div style="margin: 5px; padding: 5px;">
+                  <p>company_keyword: </p>
+                  <div class="company_input_fields_wrap">
+                    <button class="company_add_field_button">add keyword</button>
+                    <div>
+                      <input class="form-control" type="text" name="company_keyword1" placeholder="keyword1, keyword2, keyword3, ...">
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="form-group" style="margin: 10px; padding: 20px; border: 1px solid #4CAF50;">
+          <p>sentiment: </p>
+          <input type="radio" name="sentiment" value="positive"> Positive
+          <input type="radio" name="sentiment" value="neutral" checked> Neutral
+          <input type="radio" name="sentiment" value="negative"> Negative
+        </div>
+
+        <div class="container">
+          <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+        </div>
+
         </form>
       </div>
-      <a href="/posts/page/<%= pageId %>">Go back</a>
     </div>
+    <a href="/posts/page/<%= pageId %>">Go back</a>
+  </div>
   </div>
   <% include partials/footer %>
+
+    <script>
+      $(document).ready(function () {
+        var block_max_fields = 5; //maximum input boxes allowed
+        var block_wrapper = $(".company_field_wrap"); //Fields wrapper
+        var block_add_button = $(".add_field_wrap_button"); //Add button ID
+
+        var x = 1; //initlal text box count
+        $(block_add_button).click(function (e) { //on add input button click
+          e.preventDefault();
+          if (x < block_max_fields) { //max input box allowed
+            x++; //text box increment
+            $(block_wrapper).append('<div class="form-group"><label for="company">Company name :</label><select class="form-control" id="company" name="company_name' + x + '" onchange="showfieldCompany(this.options[this.selectedIndex].value, ' + x + ')"><option>Honda</option><option>Yamaha</option><option>Other</option></select><div id="other_company_div' + x + '"></div></div><div class="form-group"><p>company_keyword: </p><div class="company_input_fields_wrap"><div><input class="form-control" type="text" name="company_keyword' + x + '" placeholder="keyword1, keyword2, keyword3, ..."></div></div></div>'); //add input box
+          }
+        });
+
+        $(block_wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+          e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+      });
+    </script>
+
+    <script>
+      $(document).ready(function () {
+        var type_max_fields = 10; //maximum input boxes allowed
+        var type_wrapper = $(".type_input_fields_wrap"); //Fields wrapper
+        var type_add_button = $(".type_add_field_button"); //Add button ID
+
+        var x = 1; //initlal text box count
+        $(type_add_button).click(function (e) { //on add input button click
+          e.preventDefault();
+          if (x < type_max_fields) { //max input box allowed
+            x++; //text box increment
+            $(type_wrapper).append('<div><input class="form-control" type="text" name="type_keyword[]" placeholder="add keyword"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+          }
+        });
+
+        $(type_wrapper).on("click", ".remove_field", function (e) { //user click on remove text
+          e.preventDefault(); $(this).parent('div').remove(); x--;
+        })
+      });
+    </script>
+
+    <script type="text/javascript">
+      function showfieldCompany(name, num) {
+        if (name == 'Other') document.getElementById('other_company_div' + num).innerHTML = 'Other: <input class="form-control" type="text" name="other_company' + num + '" placeholder="add company_name"/>';
+        else document.getElementById('other_company_div' + num).innerHTML = '';
+      }
+
+      function showfieldType(name) {
+        if (name == 'Other') document.getElementById('other_type_div').innerHTML = 'Other: <input class="form-control" type="text" name="other_type" placeholder="add type"/>';
+        else document.getElementById('other_type_div').innerHTML = '';
+      }
+    </script>
+
+    <script>
+      window.onload = function () {
+        // you can think of it as a lookup table
+        var lookups = {
+          'Problem': ['ระบบขัดข้อง', 'การบริการ', 'Other'],
+          'Not problem': ['สอบถาม', 'พูดคุยทั่วไป', 'Other']
+        },
+          // just grab references to the two drop-downs
+          is_problem_select = document.querySelector('#is_problem'),
+          type_select = document.querySelector('#type');
+
+        // populate the provinces drop-down
+        setOptions(is_problem_select, Object.keys(lookups));
+        // populate the town drop-down
+        setOptions(type_select, lookups[is_problem_select.value]);
+
+        // attach a change event listener to the provinces drop-down
+        is_problem_select.addEventListener('change', function () {
+          // get the towns in the selected province
+          setOptions(type_select, lookups[is_problem_select.value]);
+        });
+
+        function setOptions(dropDown, options) {
+          // clear out any existing values
+          dropDown.innerHTML = '';
+          // insert the new options into the drop-down
+          options.forEach(function (value) {
+            dropDown.innerHTML += '<option name="' + value + '">' + value + '</option>';
+          });
+        }
+      };
+    </script>
