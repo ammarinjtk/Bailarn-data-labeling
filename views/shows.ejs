@@ -3,81 +3,82 @@
   <div class="container">
     <h1 style="text-align: center;">Post information</h1>
     <div style="width: 70%; margin: 25px auto;">
-      <div class="container">
-        <p>
-          <%= pantipPost.title%>
-        </p>
-        <p>
-          <%= pantipPost.topic%>
-        </p>
+      <div style="margin: 25px auto;">
+        <div class="container">
+          <p>
+            <%= pantipPost.title%>
+          </p>
+          <p>
+            <%= pantipPost.topic%>
+          </p>
 
-        <div class="container" style="width: 70%; margin: 30px auto;">
-          <form action="/posts/page/<%= pageId %>/<%= id %>?_method=PUT" method="POST">
+          <div class="container" style="width: 70%; margin: 30px auto;">
+            <form action="/posts/page/<%= pageId %>/<%= id %>?_method=PUT" method="POST">
 
-            <div class="form-group" style="margin: 10px; padding: 20px; border: 1px solid #4CAF50;">
-              <div style="margin: 5px; padding: 5px;">
-                <label for="is_problem">Problem :</label>
-                <select id="is_problem" name="is_problem"></select>
-              </div>
-              <div style="margin: 5px; padding: 5px;">
-                <label for="type">Type :</label>
-                <select class="form-control" id="type" name="type" onchange="showfieldType(this.options[this.selectedIndex].value)">
-                </select>
-                <div id="other_type_div"></div>
-              </div>
-              <div style="margin: 5px; padding: 5px;">
-                <label for="type_keyword">Type keyword :</label>
-                <div class="type_input_fields_wrap" id="type_keyword">
-                  <button class="type_add_field_button">add keyword</button>
-                  <div>
-                    <input class="form-control" type="text" name="type_keyword[]" placeholder="add keyword">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="company_field_wrap" style="margin: 10px; padding: 20px; border: 1px solid #4CAF50;">
-              <div style="margin: 5px; padding: 5px;">
-                <button class="add_field_wrap_button" style="margin:auto; display:block;">add company</button>
-              </div>
-              <div class="form-group">
+              <div class="form-group" style="margin: 10px; padding: 20px; border: 1px solid #4CAF50;">
                 <div style="margin: 5px; padding: 5px;">
-                  <label for="company">Company name :</label>
-                  <select class="form-control" id="company" name="company_name1" onchange="showfieldCompany(this.options[this.selectedIndex].value, 1)">
-                    <option>Honda</option>
-                    <option>Yamaha</option>
-                    <option>Other</option>
+                  <label for="is_problem">Problem :</label>
+                  <select id="is_problem" name="is_problem"></select>
+                </div>
+                <div style="margin: 5px; padding: 5px;">
+                  <label for="type">Type :</label>
+                  <select class="form-control" id="type" name="type" onchange="showfieldType(this.options[this.selectedIndex].value)">
                   </select>
-                  <div id="other_company_div1"></div>
+                  <div id="other_type_div"></div>
                 </div>
                 <div style="margin: 5px; padding: 5px;">
-                  <p>company_keyword: </p>
-                  <div class="company_input_fields_wrap">
-                    <button class="company_add_field_button">add keyword</button>
+                  <label for="type_keyword">Type keyword :</label>
+                  <div class="type_input_fields_wrap" id="type_keyword">
+                    <button class="type_add_field_button">add keyword</button>
                     <div>
-                      <input class="form-control" type="text" name="company_keyword1" placeholder="keyword1, keyword2, keyword3, ...">
+                      <input class="form-control" type="text" name="type_keyword[]" placeholder="add keyword">
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-        </div>
+              <div class="company_field_wrap" style="margin: 10px; padding: 20px; border: 1px solid #4CAF50;">
+                <div style="margin: 5px; padding: 5px;">
+                  <button class="add_field_wrap_button" style="margin:auto; display:block;">add company</button>
+                </div>
+                <div class="form-group">
+                  <div style="margin: 5px; padding: 5px;">
+                    <label for="company">Company name :</label>
+                    <select class="form-control" id="company" name="company_name1" onchange="showfieldCompany(this.options[this.selectedIndex].value, 1)">
+                      <option>Honda</option>
+                      <option>Yamaha</option>
+                      <option>Other</option>
+                    </select>
+                    <div id="other_company_div1"></div>
+                  </div>
+                  <div style="margin: 5px; padding: 5px;">
+                    <p>company_keyword: </p>
+                    <div class="company_input_fields_wrap">
+                      <button class="company_add_field_button">add keyword</button>
+                      <div>
+                        <input class="form-control" type="text" name="company_keyword1" placeholder="keyword1, keyword2, keyword3, ...">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </div>
 
-        <div class="form-group" style="margin: 10px; padding: 20px; border: 1px solid #4CAF50;">
-          <p>sentiment: </p>
-          <input type="radio" name="sentiment" value="positive"> Positive
-          <input type="radio" name="sentiment" value="neutral" checked> Neutral
-          <input type="radio" name="sentiment" value="negative"> Negative
-        </div>
+          <div class="form-group" style="margin: 10px; padding: 20px; border: 1px solid #4CAF50;">
+            <p>sentiment: </p>
+            <input type="radio" name="sentiment" value="positive"> Positive
+            <input type="radio" name="sentiment" value="neutral" checked> Neutral
+            <input type="radio" name="sentiment" value="negative"> Negative
+          </div>
 
-        <div class="container">
-          <button class="btn btn-lg btn-primary btn-block">Submit!</button>
-        </div>
+          <div class="container">
+            <button class="btn btn-lg btn-primary btn-block">Submit!</button>
+          </div>
 
-        </form>
+          </form>
+        </div>
       </div>
+      <a href="/posts/page/<%= pageId %>">Go back</a>
     </div>
-    <a href="/posts/page/<%= pageId %>">Go back</a>
-  </div>
   </div>
   <% include partials/footer %>
 
