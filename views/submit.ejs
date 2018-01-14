@@ -1,7 +1,35 @@
 <% include partials/header %>
   <div class="container">
     <h1 style="text-align: center;">Submit successfully, thank you!</h1>
-
-    <a href="/posts/page/<%= pageId %>">Go back</a>
+    <div class="container">
+      <h3>Is_problem :
+        <%= updated.is_problem %>
+      </h3>
+      <h3>Type :
+        <%= updated.type %>
+      </h3>
+      <h3>Type keywords :
+        <%= updated.type_keywords %>
+      </h3>
+      <% var x = 0; %>
+        <%  updated.company_name.forEach(name => { %>
+          <h3>
+            Company :
+            <%= name %>
+          </h3>
+          <ul>
+            <% updated.company_keywords[x].forEach(keyword => { %>
+              <li>
+                <%= keyword %>
+              </li>
+              <% }); %>
+                <% x++; %>
+          </ul>
+          <% });%>
+            <h3>Sentiment :
+              <%= updated.sentiment %>
+            </h3>
+    </div>
+    <a href="/posts/todo/page/1">Go back</a>
   </div>
   <% include partials/footer %>

@@ -4,6 +4,11 @@
       <div class="container">
         <h1>Welcome to Thai Text Platform</h1>
         <p>This aims for data collection, thank you all!</p>
+        <p>Number of
+          <%= filter %> posts :
+            <%= postNum %>/
+              <%= totalNum %>
+        </p>
       </div>
     </header>
     <div class="container">
@@ -29,11 +34,13 @@
                     </a>
                   </td>
                   <td align="center">
-                    <% if (pantipPost.updated_date) { %>
-                      &#10004;
-                      <% } else { %>
-                        &#10134;
-                        <%} %>
+                    <% if (pantipPost.is_reported) { %>
+                      <font color="red">&#10006;</font>
+                      <% } else if (pantipPost.is_updated){ %>
+                        &#10004;
+                        <% } else {%>
+                          &#10134;
+                          <% } %>
                   </td>
                 </tr>
                 <% i++; }); %>
