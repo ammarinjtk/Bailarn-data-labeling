@@ -21,29 +21,28 @@
           </tr>
         </thead>
         <tbody>
-          <% var i = 0 %>
-            <% var startPage = limitPerPage * (currentPage-1) +1 %>
-              <% pantipPosts.forEach(function(pantipPost){ %>
-                <tr>
-                  <td align="center">
-                    <%= startPage + i %>
-                  </td>
-                  <td>
-                    <a href="/posts/page/<%= (currentPage-1) +1 %>/<%= pantipPost._id %>">
-                      <%= pantipPost.title %>
-                    </a>
-                  </td>
-                  <td align="center">
-                    <% if (pantipPost.is_reported) { %>
-                      <font color="red">&#10006;</font>
-                      <% } else if (pantipPost.is_updated){ %>
-                        &#10004;
-                        <% } else {%>
-                          &#10134;
-                          <% } %>
-                  </td>
-                </tr>
-                <% i++; }); %>
+          <% var startPage = limitPerPage * (currentPage-1) +1 %>
+            <% pantipPosts.forEach(function(pantipPost){ %>
+              <tr>
+                <td align="center">
+                  <%= pantipPost.post_no %>
+                </td>
+                <td>
+                  <a href="/posts/page/<%= (currentPage-1) +1 %>/<%= pantipPost._id %>">
+                    <%= pantipPost.title %>
+                  </a>
+                </td>
+                <td align="center">
+                  <% if (pantipPost.is_reported) { %>
+                    <font color="red">&#10006;</font>
+                    <% } else if (pantipPost.is_updated){ %>
+                      &#10004;
+                      <% } else {%>
+                        &#10134;
+                        <% } %>
+                </td>
+              </tr>
+              <% }); %>
         </tbody>
       </table>
 
@@ -56,7 +55,7 @@
           </li>
           <%} else { %>
             <li class="page-item">
-              <a class="page-link" href="/posts/page/<%= currentPage-1 %>">Previous</a>
+              <a class="page-link" href="/posts/<%= filter %>/page/<%= currentPage-1 %>">Previous</a>
             </li>
             <% } %>
               <% var pageLimit = 20 %>
@@ -72,7 +71,7 @@
                         </li>
                         <% } else { %>
                           <li class="page-item">
-                            <a class="page-link" href="/posts/page/<%= i %>">
+                            <a class="page-link" href="/posts/<%= filter %>/page/<%= i %>">
                               <%= i %>
                             </a>
                           </li>
@@ -84,7 +83,7 @@
                                 </li>
                                 <%} else { %>
                                   <li class="page-item">
-                                    <a class="page-link" href="/posts/page/<%= currentPage+1 %>">Next</a>
+                                    <a class="page-link" href="/posts/<%= filter %>/page/<%= currentPage+1 %>">Next</a>
                                   </li>
                                   <% } %>
       </ul>

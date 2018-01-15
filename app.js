@@ -15,6 +15,7 @@ mongoose.connect("mongodb://localhost/pantip_data");
 
 // SCHEMA SETUP
 var pantipSchema = new mongoose.Schema({
+  post_no: Number,
   topic: String,
   title: String,
   url: String,
@@ -29,7 +30,7 @@ var pantipSchema = new mongoose.Schema({
 });
 pantipSchema.plugin(mongoosePaginate);
 
-var Model = mongoose.model('Pantip', pantipSchema, 'ratchada_room');
+var Model = mongoose.model('Pantip', pantipSchema, 'motor_tag');
 
 // // PYTHON SCRIPT SETUP
 // var options = {
@@ -63,7 +64,7 @@ app.get("/", function (req, res) {
 
 app.get("/posts/:filter/page/:pageId", function (req, res) {
 
-  var totalPosts = 37076;
+  var totalPosts = 7980;
 
   var limitPerPage = 100;
   find_dict = {
@@ -88,13 +89,25 @@ app.get("/posts/page/:pageId/:id", function (req, res) {
     if (err) {
       console.log(err);
     } else {
+
+      var topic = result.topic.replace(/\s\s+/g, ' ').trim();
       var topic_list = [];
       var i = 0;
-      (result.topic.split(" ")).forEach(element => {
+      (topic.split(" ")).forEach(element => {
         i++;
         topic_list.push(" | <font color=#808080>[" + i + "]</font> " + element);
       });
-      res.render("shows", { id: id, pageId: pageId, pantipPost: result, pantipTopic: topic_list.join("") });
+
+      var title = result.title.replace(/\s\s+/g, ' ').trim();
+      console.log(title)
+      console.log(title.split(" "))
+      var title_list = [];
+      var i = 0;
+      (title.split(" ")).forEach(element => {
+        i++;
+        title_list.push(" | <font color=#808080>[T" + i + "]</font> " + element);
+      });
+      res.render("shows", { id: id, pageId: pageId, pantipPost: result, pantipTopic: topic_list.join(""), pantipTitle: title_list.join("") });
     }
   });
   // res.render("shows", { id: id, pageId: pageId, data: data });
