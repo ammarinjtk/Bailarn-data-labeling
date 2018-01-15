@@ -99,8 +99,6 @@ app.get("/posts/page/:pageId/:id", function (req, res) {
       });
 
       var title = result.title.replace(/\s\s+/g, ' ').trim();
-      console.log(title)
-      console.log(title.split(" "))
       var title_list = [];
       var i = 0;
       (title.split(" ")).forEach(element => {
@@ -146,7 +144,7 @@ app.put("/posts/page/:pageId/:id", function (req, res) {
 
   var updated = {
     is_problem: (req.body.is_problem == 'Problem' ? true : false),
-    type: (req.body.type == 'Other' ? req.body.other_type : req.body.type),
+    type: (req.body.type == 'ปัญหาอื่น ๆ' ? req.body.other_type : req.body.type),
     type_keywords: req.body.type_keyword,
     company_name: req.body.company_name.split(','),
     company_keywords: company_keyword_list,

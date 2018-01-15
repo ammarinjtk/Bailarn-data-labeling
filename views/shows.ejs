@@ -1,20 +1,21 @@
 <% include partials/header %>
 
-  <div class="container">
+  <div style="width:90%;position:relative;margin:auto">
     <h1 style="text-align: center;">Post information</h1>
-    <form action="/posts/page/<%= pageId %>/<%= id %>/report" method="POST">
-      <button class="btn btn-lg btn-primary btn-block">Report</button>
-    </form>
     <div style="width: 70%; margin: 25px auto;">
       <div style="margin: 25px auto;">
         <div class="container">
-          <p>
-            <%- pantipTitle%>
-          </p>
-          <p>
-            <%- pantipTopic%>
-          </p>
-
+          <div style="border-size:0.5rem;border-style:solid;border-color:black;padding: 1.5rem;margin-bottom:1.5rem;font-size:20px">
+            <p style="font-size: 30px; font-weight:600">
+              <%- pantipTitle%>
+            </p>
+            <p>
+              <%- pantipTopic%>
+            </p>
+            <form action="/posts/page/<%= pageId %>/<%= id %>/report" method="POST">
+              <button class="btn btn-lg btn-primary btn-block btn-danger" style="width:25%;position:relative;margin:auto;margin-top:2rem">Report</button>
+            </form>
+          </div>
           <div class="container" style="width: 70%; margin: 30px auto;">
             <form action="/posts/page/<%= pageId %>/<%= id %>?_method=PUT" method="POST">
 
@@ -32,9 +33,10 @@
                 <div style="margin: 5px; padding: 5px;">
                   <label for="type_keyword">Type keyword :</label>
                   <div class="type_input_fields_wrap" id="type_keyword">
-                    <button class="type_add_field_button">add keyword</button>
+                    <button id="add_keyword_button" class="type_add_field_button">add keyword</button>
                     <div>
-                      <input class="form-control" type="text" name="type_keyword[]" placeholder="add keyword (number of sentence)">
+                      <input id="type_keyword_field" class="form-control" style="width:70%; margin-top:1.5rem;" type="text" name="type_keyword[]"
+                        placeholder="add keyword (number of sentence)">
                     </div>
                   </div>
                 </div>
@@ -50,7 +52,7 @@
                     <div class="company_input_fields_wrap">
                       <button class="company_add_field_button">add keyword</button>
                       <div>
-                        <input class="form-control" type="text" name="company_keyword[]" placeholder="keyword1, keyword2, keyword3, ...">
+                        <input class="form-control" style="width:70%; margin-top:1.5rem" type="text" name="company_keyword[]" placeholder="keyword1, keyword2, keyword3, ...">
                       </div>
                     </div>
                   </div>
@@ -88,7 +90,7 @@
           e.preventDefault();
           if (x < type_max_fields) { //max input box allowed
             x++; //text box increment
-            $(type_wrapper).append('<div><input class="form-control" type="text" name="type_keyword[]" placeholder="add keyword"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            $(type_wrapper).append('<div><input class="form-control" style="width:70%; display:inline; margin-top:1.5rem;" type="text" name="type_keyword[]" placeholder="add keyword"/><a href="#" class="remove_field" style="margin-left: 2rem;">Remove</a></div>'); //add input box
           }
         });
 
@@ -109,7 +111,7 @@
           e.preventDefault();
           if (x < company_max_fields) { //max input box allowed
             x++; //text box increment
-            $(company_wrapper).append('<div><input class="form-control" type="text" name="company_keyword[]" placeholder="keyword1, keyword2, keyword3, ..."/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+            $(company_wrapper).append('<div><input class="form-control" style="width:70%; display:inline; margin-top:1.5rem;"  type="text" name="company_keyword[]" placeholder="keyword1, keyword2, keyword3, ..."/><a href="#" class="remove_field" style="margin-left: 2rem;">Remove</a></div>'); //add input box
           }
         });
 
@@ -122,8 +124,14 @@
     <script type="text/javascript">
 
       function showfieldType(name) {
-        if (name == 'Other') document.getElementById('other_type_div').innerHTML = 'Other: <input class="form-control" type="text" name="other_type" placeholder="add type"/>';
-        else document.getElementById('other_type_div').innerHTML = '';
+        if (name == 'ปัญหาอื่น ๆ') {
+          document.getElementById('other_type_div').innerHTML = 'Other: <input class="form-control" type="text" name="other_type" placeholder="add other problem type"/>';
+        } else if (name == 'อื่น ๆ') {
+          document.getElementById('add_keyword_button').disabled = true;
+          document.getElementById('type_keyword_field').setAttribute("disabled", false);
+        } else {
+          document.getElementById('other_type_div').innerHTML = '';
+        }
       }
     </script>
 
@@ -131,8 +139,8 @@
       window.onload = function () {
         // you can think of it as a lookup table
         var lookups = {
-          'Problem': ['ระบบขัดข้อง', 'การบริการ', 'Other'],
-          'Not problem': ['สอบถาม', 'พูดคุยทั่วไป', 'Other']
+          'Problem': ['ปัญหาเกี่ยวกับรถ', 'ปัญหาเกี่ยวกับการบริการ', 'ปัญหาอื่น ๆ'],
+          'Not problem': ['คำชม', 'อื่น ๆ']
         },
           // just grab references to the two drop-downs
           is_problem_select = document.querySelector('#is_problem'),
