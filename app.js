@@ -30,7 +30,7 @@ var pantipSchema = new mongoose.Schema({
 });
 pantipSchema.plugin(mongoosePaginate);
 
-var Model = mongoose.model('Pantip', pantipSchema, 'motor_tag');
+var Model = mongoose.model('Pantip', pantipSchema, 'motor_tag_2');
 
 // // PYTHON SCRIPT SETUP
 // var options = {
