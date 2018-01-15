@@ -122,14 +122,14 @@ app.post("/posts/page/:pageId/:id/report", function (req, res) {
     is_reported: true
   }
 
-  // Model.findByIdAndUpdate(id, { $set: reported }, { new: true }, function (err, result) {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     console.log("id: " + id + " Report successfully");
-  //     // console.log(result);
-  //   }
-  // });
+  Model.findByIdAndUpdate(id, { $set: reported }, { new: true }, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("id: " + id + " Report successfully");
+      // console.log(result);
+    }
+  });
 
   res.render("report", { id: id, pageId: pageId, reported: reported })
 
@@ -155,14 +155,14 @@ app.put("/posts/page/:pageId/:id", function (req, res) {
     is_reported: false
   }
 
-  // Model.findByIdAndUpdate(id, { $set: updated }, { new: true }, function (err, result) {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     console.log("id: " + id + " Update successfully");
-  //     // console.log(result);
-  //   }
-  // });
+  Model.findByIdAndUpdate(id, { $set: updated }, { new: true }, function (err, result) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("id: " + id + " Update successfully");
+      // console.log(result);
+    }
+  });
 
   res.render("submit", { id: id, pageId: pageId, updated: updated })
 
