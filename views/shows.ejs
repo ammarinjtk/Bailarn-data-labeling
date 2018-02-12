@@ -126,11 +126,15 @@
       function showfieldType(name) {
         if (name == 'ปัญหาอื่น ๆ') {
           document.getElementById('other_type_div').innerHTML = 'Other: <input class="form-control" type="text" name="other_type" placeholder="add other problem type"/>';
+          document.getElementById('add_keyword_button').disabled = false;
+          document.getElementById('type_keyword_field').removeAttribute("disabled");
         } else if (name == 'อื่น ๆ') {
           document.getElementById('add_keyword_button').disabled = true;
-          document.getElementById('type_keyword_field').setAttribute("disabled", false);
+          document.getElementById('type_keyword_field').setAttribute("disabled", true);
         } else {
           document.getElementById('other_type_div').innerHTML = '';
+          document.getElementById('add_keyword_button').disabled = false;
+          document.getElementById('type_keyword_field').removeAttribute("disabled");
         }
       }
     </script>
