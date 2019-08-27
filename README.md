@@ -1,6 +1,6 @@
-# Data Collection Web Application
+# Data Labeling Web Application
 
-Web application to collect data for Thai text platform in senior projet cp41
+Web application to collect pantip data for Thai NLP platform (Bailarn) as the CP41 senior projet.
 
 ## Getting Started
 
